@@ -1,0 +1,25 @@
+function cast_max_frames_t = cast_max_frames(headtheta, peakdet_cast_lambda, threshold_headtheta)
+    max = peakdet(headtheta, peakdet_cast_lambda);
+    min = peakdet(-headtheta, peakdet_cast_lambda);
+    %cast_max_frames_t = [max(:,1);min(:,1)];
+    %cast_max_frames_t = sort(cast_max_frames_t);
+
+	%---10.12 add---
+
+    
+    max(find(max(:,2)<=0),:) = []; % remove the max points at and below 0 
+    min(find(min(:,2)<=0),:) = []; % remove the min points at and above 0
+%     display('max');
+%     display(max);
+% 	display('min');
+%     display(min);
+    peak = [max;min];
+    
+    if find(abs(peak(:,2)) >= threshold_headtheta)
+    index = find(abs(peak(:,2)) >= threshold_headtheta);
+	cast_max_frames_t = sort(peak(index,1));
+    end
+    display('cast_max_frames_t');
+    display(cast_max_frames_t);
+end
+

@@ -1,0 +1,17 @@
+function omega_peak_corr_zero_t = omega_peak_corr_zero(headomega_peak,omega_zero_frame_)
+% find the headtheta corresponding to omega=0 after omega peak
+% returns the frame ID of omega_zero immediately after peaks
+
+m = max(size(omega_zero_frame));
+n = max(size(headomega_peak));
+
+omega_peak_corr_zero = zeros(1,n);
+for i = 1:n
+    idx = find(omega_zero_frame > headomega_peak(i),1);
+    if ~isempty(idx)
+        omega_peak_corr_zero(i) = idx;
+    else
+        omega_peak_corr_zero(i) = idx-1;
+    end
+    
+end
